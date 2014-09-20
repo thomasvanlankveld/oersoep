@@ -24,10 +24,23 @@
 
 				$("button").click(function(){
 					console.log("hallaeefbeha");
-					$.getJSON("http://api.transapia.nl/explorer/resources/bookings",
-					function(data) {
-					    // doSomethingWith(data); 
-						$("#div1").html(data);
+					// $.getJSON("http://api.transapia.nl/explorer/resources/bookings",
+					// function(data) {
+					//     // doSomethingWith(data); 
+					// 	$("#div1").html(data);
+					// });
+
+					var fbURL="https://graph.facebook.com/16453004404_481759124404/comments?access_token=my_token";
+
+					$.ajax({
+					    url: "http://api.transapia.nl/explorer/resources/bookings/&callback=?",
+					    type: 'GET',
+					    success: function (data) {
+					        alert(data);
+					    },
+					    error: function(e) {
+					        alert('Error: '+e);
+					    }  
 					});
 				});
 			});
