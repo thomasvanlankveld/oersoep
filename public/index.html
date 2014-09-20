@@ -6,40 +6,25 @@
 
 	<body>
 		
-		<div id="div1"><h2>Let jQuery AJAX Change This Text</h2></div>
+		<p id="div1"><h2>Let jQuery AJAX Change This Text</h2></p>
 		<button>Get External Content</button>
 
 		<script src="js/vendor/flocking/flocking-all.js"></script>
 		<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.1.js"></script>
 		<script type="text/javascript" src="js/luuk.js"></script>
 		<script type="text/javascript">
-			// var xhr = new XMLHttpRequest();
-			// xhr.open("GET", "http://api.transapia.nl/explorer/resources/bookings", false);
-			// xhr.send();
-
-			// console.log(xhr.status);
-			// console.log(xhr.statusText);
 
 			$(document).ready(function(){
 
-
 				$("button").click(function(){
-					console.log("hallaeefbeha");
-					$.ajax({
-						url:"http://api.transapia.nl/explorer/resources/bookings",
-						complete:function(data){
-							console.log('klaar'+data);
-						}
-					});
-					/*$.getJSON("http://api.transapia.nl/explorer/resources/bookings",
+
+					$.getJSON("https://frahmework.ah.nl/!ahpi/verkoop.php?ahpikey=957bF8e7I1d1HKMnW2GeE6Syc3wuuugq&nasanr=577585",
 					function(data) {
-					    // doSomethingWith(data); 
-						$("#div1").html(data);
-					});*/
+						$("#div1").html(JSON.stringify(data, null, '&#09;'));
+					});
 				});
 			});
 
-			// ajax()
 		</script>
 	</body>
 
