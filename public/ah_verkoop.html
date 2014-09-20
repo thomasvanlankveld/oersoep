@@ -2,7 +2,7 @@
 <html>
 <meta charset="utf-8">
 <head>
-  <script src="//cdnjs.cloudflare.com/ajax/libs/d3/3.4.11/d3.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/d3/3.4.11/d3.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore.js"></script>
 </head>
 <body>
@@ -39,8 +39,8 @@ function makeGraph(data) {
       .orient("left");
 
   var line = d3.svg.line()
-      .x(function(d) { return x(d.date); })
-      .y(function(d) { return y(d.close); });
+      .x(function(d,i) { return x(new Date(d.verkoopdatum)); })
+      .y(function(d) { return y(+d.aantalverkocht); });
 
   var svg = d3.select("body").append("svg")
       .attr("width", width + margin.left + margin.right)
@@ -54,8 +54,8 @@ function makeGraph(data) {
   //     d.close = +d.close;
   //   });
 
-    x.domain(d3.extent(data, function(d) { return parseDate(d.verkoopdatum); }));
-    y.domain(d3.extent(data, function(d) { return d.aantalverkocht; }));
+    x.domain(d3.extent(data, function(d) { return new Date(d.verkoopdatum); }));
+    y.domain(d3.extent(data, function(d) { return +d.aantalverkocht; }));
 
     svg.append("g")
         .attr("class", "x axis")
@@ -70,13 +70,14 @@ function makeGraph(data) {
         .attr("y", 6)
         .attr("dy", ".71em")
         .style("text-anchor", "end")
-        .text("Price ($)");
+        .text("Sales");
 
     svg.append("path")
         .datum(data)
         .attr("class", "line")
         .attr("d", line)
-        .style("fill","red");
+        .style("fill","none")
+        .style("stroke","grey");
 }
 </script>
 </html>
