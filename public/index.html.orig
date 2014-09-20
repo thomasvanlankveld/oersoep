@@ -1,0 +1,27 @@
+<html>
+
+	<head>
+		
+	</head>
+
+	<body>
+<<<<<<< HEAD:index.html
+		<script src="js/vendor/flocking/flocking-all.js"></script>
+=======
+		
+		<script type="text/javascript" src="js/jquery-1.11.1.js"></script>
+>>>>>>> origin/master:public/index.html
+		<script type="text/javascript">
+			var xhr = new XMLHttpRequest();
+			xhr.open("GET", "http://api.transapia.nl/explorer/resources/bookings", false);
+			xhr.send();
+
+			console.log(xhr.status);
+			console.log(xhr.statusText);
+
+
+			// ajax()
+		</script>
+	</body>
+
+</html>
