@@ -1,12 +1,81 @@
+<!DOCTYPE html>
 <html>
+<meta charset="utf-8">
 <head>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/d3/3.4.11/d3.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore.js"></script>
 </head>
 <body>
 </body>
 <script>
 var apikey = "957bF8e7I1d1HKMnW2GeE6Syc3wuuugq"
+var data;
 function getData(nasanr) {
-  var url ="https://frahmework.ah.nl/!ahpi/verkoop.php?ahpikey="+apikey+"&nasanr="+nasanr
+  var url ="https://frahmework.ah.nl/!ahpi/verkoop.php?ahpikey="+apikey+"&nasanr="+nasanr;
+  d3.json(url, function(error,data){
+    makeGraph(data);
+  });
+
+function makeGraph(data) {
+  var margin = {top: 20, right: 20, bottom: 30, left: 50},
+      width = 960 - margin.left - margin.right,
+      height = 500 - margin.top - margin.bottom;
+
+  var parseDate = d3.time.format("%A %d %B").parse;
+
+  var x = d3.time.scale()
+      .range([0, width]);
+
+  var y = d3.scale.linear()
+      .range([height, 0]);
+
+  var xAxis = d3.svg.axis()
+      .scale(x)
+      .orient("bottom");
+
+  var yAxis = d3.svg.axis()
+      .scale(y)
+      .orient("left");
+
+  var line = d3.svg.line()
+      .x(function(d) { return x(d.date); })
+      .y(function(d) { return y(d.close); });
+
+  var svg = d3.select("body").append("svg")
+      .attr("width", width + margin.left + margin.right)
+      .attr("height", height + margin.top + margin.bottom)
+    .append("g")
+      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+  // d3.tsv("data.tsv", function(error, data) {
+  //   data.forEach(function(d) {
+  //     d.date = parseDate(d.date);
+  //     d.close = +d.close;
+  //   });
+
+    x.domain(d3.extent(data, function(d) { return parseDate(d.verkoopdatum); }));
+    y.domain(d3.extent(data, function(d) { return d.aantalverkocht; }));
+
+    svg.append("g")
+        .attr("class", "x axis")
+        .attr("transform", "translate(0," + height + ")")
+        .call(xAxis);
+
+    svg.append("g")
+        .attr("class", "y axis")
+        .call(yAxis)
+      .append("text")
+        .attr("transform", "rotate(-90)")
+        .attr("y", 6)
+        .attr("dy", ".71em")
+        .style("text-anchor", "end")
+        .text("Price ($)");
+
+    svg.append("path")
+        .datum(data)
+        .attr("class", "line")
+        .attr("d", line);
+  });
 }
 </script>
 </html>
