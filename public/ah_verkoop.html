@@ -15,13 +15,14 @@ function getData(nasanr) {
   d3.json(url, function(error,data){
     makeGraph(data);
   });
-
+}
+getData(577585);
 function makeGraph(data) {
   var margin = {top: 20, right: 20, bottom: 30, left: 50},
       width = 960 - margin.left - margin.right,
       height = 500 - margin.top - margin.bottom;
 
-  var parseDate = d3.time.format("%A %d %B").parse;
+  parseDate = d3.time.format("%d %B").parse;
 
   var x = d3.time.scale()
       .range([0, width]);
@@ -74,8 +75,8 @@ function makeGraph(data) {
     svg.append("path")
         .datum(data)
         .attr("class", "line")
-        .attr("d", line);
-  });
+        .attr("d", line)
+        .style("fill","red");
 }
 </script>
 </html>
